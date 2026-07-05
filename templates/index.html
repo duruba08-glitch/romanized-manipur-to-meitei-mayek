@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>English → Manipuri Translator</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>English → Manipuri Translator</h1>
+
+<textarea
+id="english"
+placeholder="Enter English text..."></textarea>
+
+<button onclick="translateText()">
+Translate
+</button>
+
+<textarea
+id="manipuri"
+placeholder="Manipuri translation..."
+readonly></textarea>
+
+</div>
+
+<script>
+
+async function translateText(){
+
+const text=document.getElementById("english").value;
+
+if(text===""){
+alert("Enter some text");
+return;
+}
+
+const response=await fetch("/translate",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+text:text
+})
+
+});
+
+const data=await response.json();
+
+document.getElementById("manipuri").value=data.translation;
+
+}
+
+</script>
+
+</body>
+
+</html>
